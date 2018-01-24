@@ -168,7 +168,7 @@ class Main extends PluginBase implements CommandExecutor,Listener {
 		return $this->money;
 	}
 
-	public function onCommand(CommandSender $sender, Command $cmd, $label, array $args) {
+	public function onCommand(CommandSender $sender, Command $cmd, string $label, array $args) : bool{
 		switch($cmd->getName()) {
 			case "killrate":
 				if (count($args) == 0) return $this->cmdStats($sender,[]);
@@ -412,9 +412,9 @@ class Main extends PluginBase implements CommandExecutor,Listener {
 				}
 				break;
 			default:
-				return;
+				return true;
 		}
-		if (!($pp instanceof Player)) return; // Not killed by player...
+		if (!($pp instanceof Player)) return true; // Not killed by player...
 		// No scoring for creative players...
 		if ($pp->isCreative() && !$this->settings["creative"]) return;
 
