@@ -25,14 +25,14 @@ class KillStreak {
   }
 
   public function endStreak(Player $player) {
-    if (!$this->enabled) return;
+    if (!$this->enabled) return true;
     $n = strtolower($player->getName());
     $newstreak = $this->owner->getScoreV2($n,"streak");
     if ($newstreak == 0 || $newstreak < $this->minkills) return;
     $this->owner->getServer()->getPluginManager()->callEvent(
         $ev = new KillRateEndStreakEvent($this->owner,$player,$newstreak)
     );
-    if ($ev->isCancelled()) return;
+    if ($ev->isCancelled()) return true;
     $oldstreak = $this->owner->getScoreV2($n,"best-streak");
     if ($oldstreak == 0) {
       $this->owner->setScore($n,$newstreak,"best-streak");
